@@ -1,0 +1,64 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="DapperToolkit.Samples.ImagePreviewSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:toolkit="clr-namespace:DapperApps.Phone.Controls;assembly=DapperApps.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="False">
+
+    <controls:TransitionService.NavigationInTransition>
+        <controls:NavigationInTransition>
+            <controls:NavigationInTransition.Backward>
+                <controls:TurnstileTransition Mode="BackwardIn"/>
+            </controls:NavigationInTransition.Backward>
+            <controls:NavigationInTransition.Forward>
+                <controls:TurnstileTransition Mode="ForwardIn"/>
+            </controls:NavigationInTransition.Forward>
+        </controls:NavigationInTransition>
+    </controls:TransitionService.NavigationInTransition>
+    <controls:TransitionService.NavigationOutTransition>
+        <controls:NavigationOutTransition>
+            <controls:NavigationOutTransition.Backward>
+                <controls:TurnstileTransition Mode="BackwardOut"/>
+            </controls:NavigationOutTransition.Backward>
+            <controls:NavigationOutTransition.Forward>
+                <controls:TurnstileTransition Mode="ForwardOut"/>
+            </controls:NavigationOutTransition.Forward>
+        </controls:NavigationOutTransition>
+    </controls:TransitionService.NavigationOutTransition>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="DAPPERTOOLKIT" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="imagepreview" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1">
+            <toolkit:ImagePreview Name="ImagePreview"
+                                  Source="/Assets/test2.jpg"
+                                  Tap="ImagePreview_Tap">
+                <toolkit:ImagePreview.Header>
+                    <TextBlock Text="ImagePreview Header" Style="{StaticResource PhoneTextTitle2Style}"/>
+                </toolkit:ImagePreview.Header>
+            </toolkit:ImagePreview>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

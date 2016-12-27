@@ -1,0 +1,83 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="DapperToolkit.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:toolkit="clr-namespace:DapperApps.Phone.Controls;assembly=DapperApps.Phone.Controls.Toolkit"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <controls:TransitionService.NavigationInTransition>
+        <controls:NavigationInTransition>
+            <controls:NavigationInTransition.Backward>
+                <controls:TurnstileTransition Mode="BackwardIn"/>
+            </controls:NavigationInTransition.Backward>
+            <controls:NavigationInTransition.Forward>
+                <controls:TurnstileTransition Mode="ForwardIn"/>
+            </controls:NavigationInTransition.Forward>
+        </controls:NavigationInTransition>
+    </controls:TransitionService.NavigationInTransition>
+    <controls:TransitionService.NavigationOutTransition>
+        <controls:NavigationOutTransition>
+            <controls:NavigationOutTransition.Backward>
+                <controls:TurnstileTransition Mode="BackwardOut"/>
+            </controls:NavigationOutTransition.Backward>
+            <controls:NavigationOutTransition.Forward>
+                <controls:TurnstileTransition Mode="ForwardOut"/>
+            </controls:NavigationOutTransition.Forward>
+        </controls:NavigationOutTransition>
+    </controls:TransitionService.NavigationOutTransition>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="DAPPER TOOLKIT" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <phone:LongListSelector x:Name="samplesLLS">
+                <phone:LongListSelector.ListHeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock x:Name="PageTitle"
+                                   Text="samples"
+                                   Margin="9,-7,0,12"
+                                   Style="{StaticResource PhoneTextTitle1Style}"
+                                   controls:TiltEffect.SuppressTilt="True"/>
+                    </DataTemplate>
+                </phone:LongListSelector.ListHeaderTemplate>
+                <phone:LongListSelector.ItemTemplate>
+                    <DataTemplate>
+                        <HyperlinkButton NavigateUri="{Binding Url}"
+                                         Style="{StaticResource HyperlinkEmptyStyle}">
+                            <toolkit:HeaderedContentControl
+                                Style="{StaticResource MultilineHyperlinkStyle}"
+                                Header="{Binding Header}"
+                                Content="{Binding Description}"/>
+                        </HyperlinkButton>
+                    </DataTemplate>
+                </phone:LongListSelector.ItemTemplate>
+                <phone:LongListSelector.ListFooterTemplate>
+                    <DataTemplate>
+                        <Rectangle Height="40"/>
+                    </DataTemplate>
+                </phone:LongListSelector.ListFooterTemplate>
+            </phone:LongListSelector>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

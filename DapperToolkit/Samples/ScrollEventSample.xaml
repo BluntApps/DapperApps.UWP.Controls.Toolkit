@@ -1,0 +1,124 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="DapperToolkit.Samples.ScrollEventSample"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:toolkit="clr-namespace:DapperApps.Phone.Controls;assembly=DapperApps.Phone.Controls.Toolkit"
+    xmlns:data="clr-namespace:DapperToolkit.Data"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+
+    <controls:TransitionService.NavigationInTransition>
+        <controls:NavigationInTransition>
+            <controls:NavigationInTransition.Backward>
+                <controls:TurnstileTransition Mode="BackwardIn"/>
+            </controls:NavigationInTransition.Backward>
+            <controls:NavigationInTransition.Forward>
+                <controls:TurnstileTransition Mode="ForwardIn"/>
+            </controls:NavigationInTransition.Forward>
+        </controls:NavigationInTransition>
+    </controls:TransitionService.NavigationInTransition>
+    <controls:TransitionService.NavigationOutTransition>
+        <controls:NavigationOutTransition>
+            <controls:NavigationOutTransition.Backward>
+                <controls:TurnstileTransition Mode="BackwardOut"/>
+            </controls:NavigationOutTransition.Backward>
+            <controls:NavigationOutTransition.Forward>
+                <controls:TurnstileTransition Mode="ForwardOut"/>
+            </controls:NavigationOutTransition.Forward>
+        </controls:NavigationOutTransition>
+    </controls:TransitionService.NavigationOutTransition>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!--Data source-->
+        <Grid.Resources>
+            <data:RSSArticleCollection x:Key="Articles"/>
+        </Grid.Resources>
+
+        <!--TitlePanel contains the name of the application-->
+        <TextBlock x:Name="ApplicationTitle"
+                   Grid.Row="0"
+                   Margin="12,17,0,28"
+                   Text="DAPPER TOOLKIT"
+                   Style="{StaticResource PhoneTextNormalStyle}"/>
+
+        <ListBox Name="ScrollEventListBox"
+                 Grid.Row="1"
+                 ItemsSource="{StaticResource Articles}"
+                 Margin="12,-12,12,0">
+            <!--Listener that triggers "OnBottomReached" when the user scrolls 3/4 (75%) of the list.-->
+            <toolkit:ScrollEventService.ScrollEventListeners>
+                <toolkit:ScrollEventListener ThresholdPercentage=".75" ThresholdReached="OnBottomReached"/>
+            </toolkit:ScrollEventService.ScrollEventListeners>
+            <!--Retemplating the ListBox so the header scrolls with the list and Loading text/progressbar are at the bottom of the list-->
+            <ListBox.Template>
+                <ControlTemplate TargetType="ListBox">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <!--Alternate PanoramaItem header that scrolls with the content for more vieweing area-->
+                            <TextBlock Text="all articles" Style="{StaticResource PhoneTextTitle1Style}"/>
+                            <!--Container for articles-->
+                            <ItemsPresenter/>
+                            <!--Loading indicators-->
+                            <TextBlock Text="Loading..."
+                                       Margin="{StaticResource PhoneMargin}"
+                                       Style="{StaticResource PhoneTextSubtleStyle}"
+                                       Opacity="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ListBox.Template>
+            <!--Template describing how each ListBoxItem is displayed-->
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="12,12,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="1" Grid.ColumnSpan="3"
+                                           Text="{Binding Title}"
+                                           Foreground="{StaticResource PhoneAccentBrush}"
+                                           FontSize="{StaticResource PhoneFontSizeMedium}"
+                                           TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                           Text="{Binding Author}"
+                                           Foreground="{StaticResource PhoneSubtleBrush}"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           Margin="0,0,12,0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2"
+                                           Text="{Binding PublishTime}"
+                                           Foreground="{StaticResource PhoneSubtleBrush}"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                                           Text="{Binding Summary}"
+                                           Foreground="{StaticResource PhoneForegroundBrush}"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           TextWrapping="Wrap"
+                                           MaxHeight="75"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</phone:PhoneApplicationPage>
