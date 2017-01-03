@@ -89,27 +89,12 @@
     <Compile Include="CompositeCollection\CompositeCollection.cs" />
     <Compile Include="CompositeCollection\CompositeContainer.cs" />
     <Compile Include="Control\Control.cs" />
-    <Compile Include="DapperApps.Phone.Collections\DapperApps.Phone.Collections.ObjectModel\ObservableDictionary.cs" />
-    <Compile Include="DapperApps.Phone.Collections\MultiLevelCache\CacheItem.cs" />
-    <Compile Include="DapperApps.Phone.Collections\MultiLevelCache\ICacheLevel.cs" />
-    <Compile Include="DapperApps.Phone.Collections\MultiLevelCache\MultiLevelCache.cs" />
-    <Compile Include="DapperApps.Phone.Media.Imaging\DapperBitmapImage.cs" />
-    <Compile Include="DapperApps.Phone.Media.Imaging\DapperBitmapSource.cs" />
-    <Compile Include="DapperApps.Phone.Media.Imaging\DapperWriteableBitmap.cs" />
-    <Compile Include="DapperApps.Phone.Media.Imaging\WriteableBitmapEx.cs" />
-    <Compile Include="DapperApps.Phone.Serialization\BinarySerializer.cs" />
-    <Compile Include="Extensions\ApplicationBarEx.cs" />
     <Compile Include="Extensions\BinaryWriterEx.cs" />
-    <Compile Include="Extensions\PictureCollectionEx.cs" />
     <Compile Include="Extensions\VisualTreeEx.cs" />
     <Compile Include="HeaderedContentControl\HeaderedContentControl.cs" />
     <Compile Include="HeaderedListBox\HeaderedListBox.cs" />
     <Compile Include="ImageControl\ImageControl.cs" />
-    <Compile Include="ImagePreview\ImagePreview.cs" />
-    <Compile Include="PageRotation\PageRotationAnimation.cs" />
-    <Compile Include="PageRotation\PageRotationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PTZImage\PTZImage.cs" />
     <Compile Include="ScrollEvent\ScrollEventListener.cs" />
     <Compile Include="ScrollEvent\ScrollEventService.cs" />
   </ItemGroup>

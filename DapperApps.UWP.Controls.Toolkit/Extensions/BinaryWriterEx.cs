@@ -9,7 +9,7 @@
  * To see the article about this app, visit http://www.dapper-apps.com/DapperToolkit
  */
 
-namespace DapperApps.Phone.Extensions
+namespace DapperApps.UWP.Extensions
 {
     using System;
     using System.Collections.Generic;

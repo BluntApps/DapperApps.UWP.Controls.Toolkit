@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>falven</authors>
+    <owners>falven</owners>
+    <licenseUrl>https://github.com/Falven/DapperApps.UWP.Controls.Toolkit/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Falven/DapperApps.UWP.Controls.Toolkit</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Toolkit containing useful controls and services for UWP applications.</description>
+    <releaseNotes>Upgraded project to UWP.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>Toolkit DapperApps UWP Controls</tags>
+  </metadata>
+</package>
