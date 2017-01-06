@@ -12,6 +12,7 @@
 namespace DapperApps.UWP.Controls
 {
     using System;
+    using System.Windows.Input;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
     using Windows.UI.Xaml.Data;
@@ -30,6 +31,11 @@ namespace DapperApps.UWP.Controls
         /// TODO
         /// </summary>
         private ScrollViewer _target;
+
+        /// <summary>
+        /// TODO
+        /// </summary>
+        private Binding _listener;
 
         /// <summary>
         /// The target element to check for scrolling.
@@ -169,22 +175,107 @@ namespace DapperApps.UWP.Controls
             new PropertyMetadata(new PropertyChangedCallback(OnVerticalOffsetChanged)));
         #endregion
 
+        #region ThresholdReachedCommand Dependency Property
+        public ICommand ThresholdReachedCommand
+        {
+            get { return (ICommand)GetValue(ThresholdReachedCommandProperty); }
+            set { SetValue(ThresholdReachedCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ThresholdReachedCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ThresholdReachedCommandProperty =
+            DependencyProperty.Register(
+                "ThresholdReachedCommand",
+                typeof(ICommand),
+                typeof(ScrollEventListener),
+                new PropertyMetadata(null, new PropertyChangedCallback(CommandChanged)));
+        #endregion
+
+        #region IsEnabled DependencyProperty
+        public bool IsEnabled
+        {
+            get { return (bool)GetValue(IsEnabledProperty); }
+            set { SetValue(IsEnabledProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsEnabled.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsEnabledProperty =
+            DependencyProperty.Register(
+                "IsEnabled",
+                typeof(bool),
+                typeof(ScrollEventListener),
+                new PropertyMetadata(true, new PropertyChangedCallback(IsEnabledChanged)));
+        #endregion
+
+        private static void CommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ScrollEventListener sel = (ScrollEventListener)d;
+            sel.HookUpCommand((ICommand)e.OldValue, (ICommand)e.NewValue);
+        }
+
         /// <summary>
         /// Binds the VerticalOffsetBinding dependency property to
         /// the ScrollViewer's VerticalOffset property to recieve callbacks.
         /// </summary>
         private void AttachBindingListener()
         {
-            Binding binding = new Binding
+            if (null == _listener)
             {
-                Source = Target,
-                Path = new PropertyPath("VerticalOffset"),
-                Mode = BindingMode.OneWay,
-            };
-            BindingOperations.SetBinding(
-                this,
-                ScrollEventListener.VerticalOffsetBindingProperty,
-                binding);
+                _listener = new Binding
+                {
+                    Source = Target,
+                    Path = new PropertyPath("VerticalOffset"),
+                    Mode = BindingMode.OneWay,
+                };
+                BindingOperations.SetBinding(this, ScrollEventListener.VerticalOffsetBindingProperty, _listener);
+            }
+        }
+
+        private void DetachBindingListener()
+        {
+            if (null != _listener)
+            {
+                BindingOperations.SetBinding(this, ScrollEventListener.VerticalOffsetBindingProperty, null);
+                _listener = null;
+            }
+        }
+
+        private static void IsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ScrollEventListener sel = (ScrollEventListener)d;
+            if ((bool)e.NewValue)
+            {
+                sel.AttachBindingListener();
+            }
+            else
+            {
+                sel.DetachBindingListener();
+            }
+        }
+
+        // Add a new command to the Command Property.
+        private void HookUpCommand(ICommand oldCommand, ICommand newCommand)
+        {
+            // If oldCommand is not null, then we need to remove the handlers.
+            if (null != oldCommand)
+                oldCommand.CanExecuteChanged -= CanExecuteChanged;
+            if (null != newCommand)
+                newCommand.CanExecuteChanged += CanExecuteChanged;
+        }
+
+        private void CanExecuteChanged(object sender, EventArgs e)
+        {
+            if (null != ThresholdReachedCommand)
+            {
+                if (ThresholdReachedCommand.CanExecute(null))
+                {
+                    this.IsEnabled = true;
+                }
+                else
+                {
+                    this.IsEnabled = false;
+                }
+            }
         }
 
         /// <summary>
@@ -201,30 +292,34 @@ namespace DapperApps.UWP.Controls
         private void CheckThreshold()
         {
             var handler = ThresholdReached;
-            if (null != handler)
+            var cmdHandler = ThresholdReachedCommand;
+            if (BottomOffsetThreshold.HasValue)
             {
-                if (BottomOffsetThreshold.HasValue)
+                if ((Target.VerticalOffset + Target.ViewportHeight) >= (Target.ExtentHeight - BottomOffsetThreshold))
                 {
-                    if ((Target.VerticalOffset + Target.ViewportHeight) >= (Target.ExtentHeight - BottomOffsetThreshold))
-                    {
-                        handler(this, new EventArgs());
-                    }
+                    handler?.Invoke(this, new EventArgs());
+                    if (null != cmdHandler && cmdHandler.CanExecute(null))
+                        cmdHandler.Execute(null);
                 }
-                else if (ThresholdPercentage.HasValue)
+            }
+            else if (ThresholdPercentage.HasValue)
+            {
+                if (((Target.VerticalOffset + Target.ViewportHeight) / Target.ExtentHeight) >= ThresholdPercentage)
                 {
-                    if (((Target.VerticalOffset + Target.ViewportHeight) / Target.ExtentHeight) >= ThresholdPercentage)
-                    {
-                        handler(this, new EventArgs());
-                    }
+                    handler?.Invoke(this, new EventArgs());
+                    if (null != cmdHandler && cmdHandler.CanExecute(null))
+                        cmdHandler.Execute(null);
                 }
-                else
+            }
+            else
+            {
+                if (TopOffsetThreshold.HasValue)
                 {
-                    if (TopOffsetThreshold.HasValue)
+                    if ((Target.VerticalOffset + Target.ViewportHeight) >= TopOffsetThreshold)
                     {
-                        if ((Target.VerticalOffset + Target.ViewportHeight) >= TopOffsetThreshold)
-                        {
-                            handler(this, new EventArgs());
-                        }
+                        handler?.Invoke(this, new EventArgs());
+                        if (null != cmdHandler && cmdHandler.CanExecute(null))
+                            cmdHandler.Execute(null);
                     }
                 }
             }

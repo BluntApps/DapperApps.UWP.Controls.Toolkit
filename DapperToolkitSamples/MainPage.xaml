@@ -8,7 +8,88 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <!--Data source-->
+        <Grid.Resources>
+            <data:RSSArticleCollection x:Key="Articles"/>
+        </Grid.Resources>
+
+        <!--TitlePanel contains the name of the application-->
+        <TextBlock x:Name="ApplicationTitle"
+                   Grid.Row="0"
+                   Margin="12,17,0,28"
+                   Text="DAPPER TOOLKIT"
+                   Style="{StaticResource PhoneTextNormalStyle}"/>
+
+        <ListBox Name="ScrollEventListBox"
+                 Grid.Row="1"
+                 ItemsSource="{StaticResource Articles}"
+                 Margin="12,-12,12,0">
+            <!--Listener that triggers "OnBottomReached" when the user scrolls 3/4 (75%) of the list.-->
+            <toolkit:ScrollEventService.ScrollEventListeners>
+                <toolkit:ScrollEventListener ThresholdPercentage=".75" ThresholdReached="OnBottomReached" />
+            </toolkit:ScrollEventService.ScrollEventListeners>
+            <!--Retemplating the ListBox so the header scrolls with the list and Loading text/progressbar are at the bottom of the list-->
+            <ListBox.Template>
+                <ControlTemplate TargetType="ListBox">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <!--Alternate PanoramaItem header that scrolls with the content for more vieweing area-->
+                            <TextBlock Text="all articles" Style="{StaticResource PhoneTextTitle1Style}"/>
+                            <!--Container for articles-->
+                            <ItemsPresenter/>
+                            <!--Loading indicators-->
+                            <TextBlock Text="Loading..."
+                                       Margin="{StaticResource PhoneMargin}"
+                                       Style="{StaticResource PhoneTextSubtleStyle}"
+                                       Opacity="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ListBox.Template>
+            <!--Template describing how each ListBoxItem is displayed-->
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="12,12,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="1" Grid.ColumnSpan="3"
+                                           Text="{Binding Title}"
+                                           Foreground="{StaticResource PhoneAccentBrush}"
+                                           FontSize="{StaticResource PhoneFontSizeMedium}"
+                                           TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                           Text="{Binding Author}"
+                                           Foreground="{StaticResource PhoneSubtleBrush}"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           Margin="0,0,12,0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2"
+                                           Text="{Binding PublishTime}"
+                                           Foreground="{StaticResource PhoneSubtleBrush}"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                                           Text="{Binding Summary}"
+                                           Foreground="{StaticResource PhoneForegroundBrush}"
+                                           FontSize="{StaticResource PhoneFontSizeSmall}"
+                                           TextWrapping="Wrap"
+                                           MaxHeight="75"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Page>
