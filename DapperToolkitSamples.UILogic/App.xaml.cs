@@ -19,6 +19,8 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using DapperToolkitSamples.Views;
 using Microsoft.Practices.Prism.Mvvm;
+using Microsoft.Practices.Prism.Mvvm.Interfaces;
+using Microsoft.Practices.Unity;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 namespace DapperToolkitSamples
@@ -28,6 +30,8 @@ namespace DapperToolkitSamples
     /// </summary>
     public sealed partial class App : MvvmAppBase
     {
+        private IUnityContainer _container;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -35,11 +39,26 @@ namespace DapperToolkitSamples
         public App()
         {
             InitializeComponent();
+
+            _container = new UnityContainer();
         }
 
         protected override Task OnLaunchApplicationAsync(LaunchActivatedEventArgs args)
         {
             NavigationService.Navigate("Main", null);
+            return Task.FromResult<object>(null);
+        }
+
+        protected override Task OnInitializeAsync(IActivatedEventArgs args)
+        {
+            // Register MvvmAppBase services
+            _container.RegisterInstance<ISessionStateService>(SessionStateService);
+            _container.RegisterInstance<INavigationService>(NavigationService);
+
+            // Register app-specific services
+            
+            // 
+            ViewModelLocationProvider.SetDefaultViewModelFactory((viewModelType) => _container.Resolve(viewModelType));
             return Task.FromResult<object>(null);
         }
     }

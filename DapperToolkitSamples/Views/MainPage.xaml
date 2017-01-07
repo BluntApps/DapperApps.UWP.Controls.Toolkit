@@ -6,8 +6,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:scrollEvent="using:DapperApps.WinRT.Toolkit.ScrollEvent"
     xmlns:data="using:DapperToolkitSamples.Data"
+    xmlns:mvvm="using:Microsoft.Practices.Prism.Mvvm"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mvvm:ViewModelLocator.AutoWireViewModel="True">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid Background="Transparent">
