@@ -12,6 +12,7 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		DapperToolkitSamples.UILogic\DapperToolkitSamples.UILogic.projitems*{961b2d43-55eb-4473-8c7b-152881b8e2c2}*SharedItemsImports = 13
+		DapperToolkitSamples.UILogic\DapperToolkitSamples.UILogic.projitems*{f6d24fca-ce05-4b44-811f-e1d96e6f6cbf}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
