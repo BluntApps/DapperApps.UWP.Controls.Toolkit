@@ -1,0 +1,103 @@
+﻿<Page
+    x:Class="DapperToolkitSamples.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:scrollEvent="using:DapperApps.WinRT.Toolkit.ScrollEvent"
+    xmlns:data="using:DapperToolkitSamples.Data"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application-->
+        <TextBlock Grid.Row="0"
+                   Margin="12,17,0,28"
+                   Text="DAPPER TOOLKIT"/>
+
+        <ListBox Name="ScrollEventListBox"
+                 Grid.Row="1"
+                 Margin="12,-12,12,0">
+            
+            <ListBox.ItemsSource>
+                <data:RssArticleCollection>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                    <data:RssArticle Title="SomeArticleTitle" PublishTime="1/6/2017"  Author="SomeAuthor" Summary="SomeSummary"/>
+                </data:RssArticleCollection>
+            </ListBox.ItemsSource>
+
+            <!--Listener that triggers "OnBottomReached" when the user scrolls 3/4 (75%) of the list.-->
+            <scrollEvent:ScrollEventService.ScrollEventListeners>
+                <scrollEvent:ScrollEventListener BottomOffsetThreshold=".75" ThresholdReached="OnBottomReached"/>
+            </scrollEvent:ScrollEventService.ScrollEventListeners>
+
+            <!--Retemplating the ListBox so the header scrolls with the list and Loading text/progressbar are at the bottom of the list-->
+            <ListBox.Template>
+                <ControlTemplate TargetType="ListBox">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <!--Alternate PanoramaItem header that scrolls with the content for more vieweing area-->
+                            <TextBlock Text="all articles"/>
+                            <!--Container for articles-->
+                            <ItemsPresenter/>
+                            <!--Loading indicators-->
+                            <TextBlock Text="Loading..."
+                                       Margin="12"
+                                       Opacity="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ListBox.Template>
+            <!--Template describing how each ListBoxItem is displayed-->
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="12,12,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="1" Grid.ColumnSpan="2"
+                                           Text="{Binding Title}"
+                                           Foreground="{StaticResource PhoneAccentBrush}"
+                                           TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                           Text="{Binding Author}"
+                                           Margin="0,0,12,0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2"
+                                           Text="{Binding PublishTime}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                                           Text="{Binding Summary}"
+                                           Foreground="{StaticResource PhoneForegroundBrush}"
+                                           TextWrapping="Wrap"
+                                           MaxHeight="75"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Page>

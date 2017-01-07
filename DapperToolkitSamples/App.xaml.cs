@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿/*
+ * Copyright (c) Dapper Apps.  All rights reserved.
+ * Use of this sample source code is subject to the terms of the Dapper Apps license 
+ * agreement under which you licensed this sample source code and is provided AS-IS.
+ * If you did not accept the terms of the license agreement, you are not authorized 
+ * to use this sample source code.  For the terms of the license, please see the 
+ * license agreement between you and Dapper Apps.
+ *
+ * To see the article about this app, visit http://www.dapper-apps.com/DapperToolkit
+ */
+
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using DapperToolkitSamples.Views;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 

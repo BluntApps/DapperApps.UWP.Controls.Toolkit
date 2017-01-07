@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperApps.UWP.Controls.Toolkit", "DapperApps.UWP.Controls.Toolkit\DapperApps.UWP.Controls.Toolkit.csproj", "{FAE5731F-FB81-4C03-9438-C4FCD041E577}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperApps.WinRT.Toolkit", "DapperApps.WinRT.Toolkit\DapperApps.WinRT.Toolkit.csproj", "{FAE5731F-FB81-4C03-9438-C4FCD041E577}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperToolkitSamples", "DapperToolkitSamples\DapperToolkitSamples.csproj", "{F6D24FCA-CE05-4B44-811F-E1D96E6F6CBF}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DapperToolkitSamples.UILogic", "DapperToolkitSamples.UILogic\DapperToolkitSamples.UILogic.shproj", "{961B2D43-55EB-4473-8C7B-152881B8E2C2}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		DapperToolkitSamples.UILogic\DapperToolkitSamples.UILogic.projitems*{961b2d43-55eb-4473-8c7b-152881b8e2c2}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
